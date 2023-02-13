@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Landing Page' do
     before :each do 
-        user1 = User.create(name: "User One", email: "user1@test.com")
-        user2 = User.create(name: "User Two", email: "user2@test.com")
+        user1 = User.create(name: "User One", email: "user1@test.com", password: 'password')
+        user2 = User.create(name: "User Two", email: "user2@test.com", password: 'password')
         visit '/'
     end 
 
@@ -20,11 +20,16 @@ RSpec.describe 'Landing Page' do
 
         click_link "Home"
         expect(current_path).to eq(root_path)
+
+        visit '/'
+
+        click_link("Login")
+        expect(current_path).to eq(login_path)
     end 
 
     it 'lists out existing users' do 
-        user1 = User.create(name: "User One", email: "user1@test.com")
-        user2 = User.create(name: "User Two", email: "user2@test.com")
+        user1 = User.create(name: "User One", email: "user1@test.com", password: 'password')
+        user2 = User.create(name: "User Two", email: "user2@test.com", password: 'password')
 
         expect(page).to have_content('Existing Users:')
 
